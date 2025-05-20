@@ -41,7 +41,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>👑 London Itinerary: June 21–25, 2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -105,9 +105,15 @@
             color: white;
             text-align: center;
         }
-        .day1 { background-color: #A3DFFA; }
-        .day1-row { background-color: #D6EFFF; }
-        .day1-row:hover { background-color: #E6F0FA; }
+        
+.day1 { background-color: #A3DFFA; }
+.day1-row {
+    background-color: #D6EFFF;
+    padding: 12px !important;
+    font-size: 15px !important;
+}
+.day1-row:hover { background-color: #E6F0FA; }
+
         .day2 { background-color: #B7F7C8; }
         .day2-row { background-color: #E0FAE6; }
         .day2-row:hover { background-color: #EBF9EE; }
@@ -133,38 +139,10 @@
             font-size: .9em;
             color: #666;
         }
-    
-@media screen and (max-width: 768px) {
-    body {
-        margin: 10px;
-        padding: 0;
-        font-size: 14px;
-    }
-    .container {
-        padding: 15px;
-        overflow-x: auto;
-    }
-    table {
-        width: 100%;
-        table-layout: auto;
-        word-wrap: break-word;
-    }
-    th, td {
-        padding: 10px;
-        font-size: 14px;
-    }
-    h1 {
-        font-size: 26px;
-    }
-    h2 {
-        font-size: 18px;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
-    <div class="container" style="overflow-x: auto; zoom: 0.9;">
+    <div class="container">
         <h1>👑 London Itinerary: June 21–25, 2025</h1>
         <h2>For Four People</h2>
 
