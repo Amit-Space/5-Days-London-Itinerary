@@ -1,0 +1,343 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌆 London Itinerary: June 21–25, 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+            background-image: url('https://images.unsplash.com/photo-1505761671935-7b5a0ae14f88?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-color: rgba(255, 255, 255, 0.2); /* 20% opacity for lightness */
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            background: linear-gradient(90deg, #A3DFFA, #FDFD96);
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            background-color: rgba(255, 255, 255, 0.95); /* 95% opacity for lightness */
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            color: #333;
+        }
+        th {
+            background-color: #5A7FAD;
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(230, 240, 250, 0.5);
+        }
+        .day-header {
+            font-size: 20px;
+            font-weight: 600;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .day1 { background-color: #A3DFFA; }
+        .day1-row { background-color: #D6EFFF; }
+        .day1-row:hover { background-color: #E6F0FA; }
+        .day2 { background-color: #B7F7C8; }
+        .day2-row { background-color: #E0FAE6; }
+        .day2-row:hover { background-color: #EBF9EE; }
+        .day3 { background-color: #FDFD96; }
+        .day3-row { background-color: #FEFECB; }
+        .day3-row:hover { background-color: #FFFFE0; }
+        .day4 { background-color: #FFCCCB; }
+        .day4-row { background-color: #FFE6E5; }
+        .day4-row:hover { background-color: #FFF0EF; }
+        .day5 { background-color: #E6D0FA; }
+        .day5-row { background-color: #F2E8FD; }
+        .day5-row:hover { background-color: #F7F0FE; }
+        tr:hover {
+            transition: background-color 0.3s;
+        }
+        @media print {
+            body { background-image: none; background-color: white; }
+            .container { background-color: white; }
+        }
+		.footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: .9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌆 London Itinerary: June 21–25, 2025</h1>
+        <h2>For Four People</h2>
+
+        <!-- Day 1 -->
+        <table>
+            <tr class="day-header day1">
+                <td colspan="5">Day 1: June 21 (Saturday)</td>
+            </tr>
+            <tr>
+                <th>Attraction</th>
+                <th>Time</th>
+                <th>Travel</th>
+                <th>Opening Hours</th>
+                <th>Highlights</th>
+            </tr>
+            <tr class="day1-row">
+                <td>Tower of London</td>
+                <td>9:00 AM – 12:00 PM</td>
+                <td>-</td>
+                <td>9:00 AM – 5:30 PM (last admission 4:30 PM)</td>
+                <td>Explore the historic castle, Crown Jewels, and Yeoman Warders.</td>
+            </tr>
+            <tr class="day1-row">
+                <td>Borough Market</td>
+                <td>If time permits</td>
+                <td>30-minute walk</td>
+                <td>9:00 AM – 5:00 PM</td>
+                <td>Enjoy a variety of food stalls and local delicacies.</td>
+            </tr>
+            <tr class="day1-row">
+                <td>The View from The Shard</td>
+                <td>1:30 PM – 2:30 PM</td>
+                <td>20-minute walk</td>
+                <td>10:00 AM – 10:00 PM (last entry 9:00 PM)</td>
+                <td>Experience panoramic views of London from the observation deck.</td>
+            </tr>
+            <tr class="day1-row">
+                <td>Palace of Westminster</td>
+                <td>4:00 PM – 4:45 PM</td>
+                <td>30-minute travel</td>
+                <td>9:00 AM – 4:15 PM (last entry 4:15 PM)</td>
+                <td>Houses of Parliament after the House of Commons & the House of Lords, the two legislative chambers which occupy the building.</td>
+            </tr>
+        </table>
+
+        <!-- Day 2 -->
+        <table>
+            <tr class="day-header day2">
+                <td colspan="5">Day 2: June 22 (Sunday)</td>
+            </tr>
+            <tr>
+                <th>Attraction</th>
+                <th>Time</th>
+                <th>Travel</th>
+                <th>Opening Hours</th>
+                <th>Highlights</th>
+            </tr>
+            <tr class="day2-row">
+                <td>The South Bank Photography</td>
+                <td>8:00 AM – 9:30 AM</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Capture iconic views of the London Eye, Big Ben, & the Thames.</td>
+            </tr>
+            <tr class="day2-row">
+                <td>London Zoo & Regent's Park</td>
+                <td>10:30 AM – 1:30 PM</td>
+                <td>45-minute travel</td>
+                <td>10:00 AM – 6:00 PM (last admission 5:00 PM)</td>
+                <td>Explore diverse animal exhibits and interactive displays.</td>
+            </tr>
+            <tr class="day2-row">
+                <td>Natural History Museum</td>
+                <td>3:00 PM – 5:30 PM</td>
+                <td>45-minute travel</td>
+                <td>10:00 AM – 5:50 PM (last entry 5:30 PM)</td>
+                <td>Discover exhibits on dinosaurs, human evolution, and more.</td>
+            </tr>
+        </table>
+
+        <!-- Day 3 -->
+        <table>
+            <tr class="day-header day3">
+                <td colspan="5">Day 3: June 23 (Monday)</td>
+            </tr>
+            <tr>
+                <th>Attraction</th>
+                <th>Time</th>
+                <th>Travel</th>
+                <th>Opening Hours</th>
+                <th>Highlights</th>
+            </tr>
+            <tr class="day3-row">
+                <td>Westminster Abbey</td>
+                <td>9:30 AM – 11:00 AM</td>
+                <td>-</td>
+                <td>9:30 AM – 3:30 PM (last entry 3:00 PM)</td>
+                <td>Visit the historic church known for royal ceremonies.</td>
+            </tr>
+            <tr class="day3-row">
+                <td>Horse Guards Parade</td>
+                <td>11:15 AM – 12:30 PM</td>
+                <td>10-minute walk</td>
+                <td>-</td>
+                <td>Witness the Changing of the Guard ceremony.</td>
+            </tr>
+            <tr class="day3-row">
+                <td>St. Paul's Cathedral</td>
+                <td>1:30 PM – 3:30 PM</td>
+                <td>15-minute travel</td>
+                <td>8:30 AM – 4:30 PM (last entry 4:00 PM)</td>
+                <td>Explore the iconic dome and crypt.</td>
+            </tr>
+            <tr class="day3-row">
+                <td>Little Venice</td>
+                <td>4:00 PM – 5:30 PM</td>
+                <td>30-minute travel</td>
+                <td>-</td>
+                <td>Peaceful canal walk & picturesque views.</td>
+            </tr>
+        </table>
+
+        <!-- Day 4 -->
+        <table>
+            <tr class="day-header day4">
+                <td colspan="5">Day 4: June 24 (Tuesday)</td>
+            </tr>
+            <tr>
+                <th>Attraction</th>
+                <th>Time</th>
+                <th>Travel</th>
+                <th>Opening Hours</th>
+                <th>Highlights</th>
+            </tr>
+            <tr class="day4-row">
+                <td>Thames River Cruise</td>
+                <td>10:00 AM</td>
+                <td>Hop on Hop off (Stop #16) to Westminster Pier</td>
+                <td>-</td>
+                <td>View landmarks like Tower Bridge and the Shard from the river.</td>
+            </tr>
+            <tr class="day4-row">
+                <td>London Eye</td>
+                <td>12:30 PM – 1:30 PM</td>
+                <td>10-minute walk</td>
+                <td>11:00 AM – 6:00 PM</td>
+                <td>Experience panoramic views of London from the giant Ferris wheel.</td>
+            </tr>
+            <tr class="day4-row">
+                <td>Hop on Hop off & Notting Hill</td>
+                <td>2:30 PM – 6:00 PM</td>
+                <td>Hop on Hop off</td>
+                <td>-</td>
+                <td>Explore Portobello Road Market Lancaster Rd.</td>
+            </tr>
+        </table>
+
+        <!-- Day 5 -->
+        <table>
+            <tr class="day-header day5">
+                <td colspan="5">Day 5: June 25 (Wednesday)</td>
+            </tr>
+            <tr>
+                <th>Attraction</th>
+                <th>Time</th>
+                <th>Travel</th>
+                <th>Opening Hours</th>
+                <th>Highlights</th>
+            </tr>
+            <tr class="day5-row">
+                <td>Hyde Park</td>
+                <td>9:00 AM – 10:30 AM</td>
+                <td>-</td>
+                <td>5:00 AM – 12:00 AM</td>
+                <td>Relax in one of London's largest parks, visit the Serpentine Lake.</td>
+            </tr>
+            <tr class="day5-row">
+                <td>Buckingham Palace (Exterior Viewing)</td>
+                <td>10:30 AM – 12:00 PM</td>
+                <td>15-minute walk</td>
+                <td>-</td>
+                <td>Experience change of guard parade.</td>
+            </tr>
+            <tr class="day5-row">
+                <td>British Museum</td>
+                <td>12:30 PM – 3:00 PM</td>
+                <td>20-minute travel</td>
+                <td>10:00 AM – 5:00 PM (Fridays until 8:30 PM)</td>
+                <td>Discover artifacts from ancient civilizations.</td>
+            </tr>
+            <tr class="day5-row">
+                <td>Dr. B.R. Ambedkar House</td>
+                <td>3:30 PM – 4:30 PM</td>
+                <td>30-minute travel</td>
+                <td>11:00 AM – 5:00 PM (Monday to Friday)</td>
+                <td>Explore the life and work of Dr. B.R. Ambedkar.</td>
+            </tr>
+        </table>
+    </div>
+	<div class="footer">
+    <p>Created by Amit, in love with the UK</p>
+</div>
+</body>
+</html>
